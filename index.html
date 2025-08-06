@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jago Trading dalam 365 Hari</title>
+    <meta name="description" content="Panduan lengkap dari nol hingga mahir untuk menguasai Forex, Saham, dan Kripto dalam 365 hari.">
+    
+    <!-- Google Fonts & Font Awesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* --- 1. Variabel & Reset Global --- */
+        :root {
+            --color-bg: #0d1117;
+            --color-bg-secondary: #161b22;
+            --color-border: #30363d;
+            --color-primary: #58a6ff;
+            --color-accent: #f778ba;
+            --color-success: #2ea043;
+            --color-danger: #f85149;
+            --color-text: #c9d1d9;
+            --color-text-muted: #8b949e;
+            --font-heading: 'Montserrat', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --border-radius: 12px;
+            --transition-speed: 0.4s;
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); background-color: var(--color-bg); color: var(--color-text); line-height: 1.7; overflow-x: hidden; }
+        
+        /* --- 2. Latar Belakang & Layout Utama --- */
+        #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1; }
+        .container { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem; position: relative; z-index: 2; }
+        #homeView, #lessonView { width: 100%; transition: opacity 0.3s ease, transform 0.3s ease; }
+        .view-hidden { display: none !important; }
+
+        /* --- 3. Tampilan Home (Navigasi) --- */
+        .header { text-align: center; padding: 5rem 1rem 3rem; }
+        .header h1 { font-family: var(--font-heading); font-size: clamp(2.8rem, 7vw, 4.5rem); font-weight: 800; color: white; margin-bottom: 1rem; letter-spacing: -2px; background: linear-gradient(90deg, var(--color-primary), var(--color-accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .header .tagline { font-size: 1.2rem; color: var(--color-text-muted); max-width: 600px; margin: 0 auto 2rem auto; }
+        .search-container { margin: 2rem auto; max-width: 600px; }
+        #searchInput { width: 100%; padding: 1rem 1.5rem; font-size: 1rem; border-radius: 50px; border: 1px solid var(--color-border); background-color: var(--color-bg-secondary); color: var(--color-text); transition: all 0.3s ease; }
+        #searchInput:focus { outline: none; box-shadow: 0 0 0 4px rgba(88, 166, 255, 0.3); border-color: var(--color-primary); }
+        .grid-nav { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+        .card { background-color: var(--color-bg-secondary); border-radius: var(--border-radius); padding: 1.5rem; border: 1px solid var(--color-border); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; }
+        .card:hover { transform: translateY(-8px); box-shadow: 0 15px 35px rgba(88, 166, 255, 0.1); }
+        .card-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+        .card-icon { font-size: 1.2rem; color: var(--color-primary); }
+        .card h3 { font-family: var(--font-heading); font-size: 1.1rem; color: white; }
+        .card p { color: var(--color-text-muted); font-size: 0.9rem; }
+
+        /* --- 4. Tampilan Pelajaran (Konten Dinamis) --- */
+        #lessonView { opacity: 0; transform: translateY(20px); }
+        #lessonView.visible { opacity: 1; transform: translateY(0); }
+        #lessonContainer { background: var(--color-bg-secondary); border-radius: var(--border-radius); border: 1px solid var(--color-border); margin-top: 2rem; overflow: hidden; }
+        #backButton { display: inline-flex; align-items: center; gap: 0.5rem; background: none; border: none; color: var(--color-primary); font-size: 1rem; cursor: pointer; padding: 1rem 0; font-weight: 600; }
+        
+        /* --- 5. Styling Umum untuk Konten Pelajaran --- */
+        .lesson-header { padding: 3rem 1.5rem; text-align: center; background: linear-gradient(135deg, rgba(88,166,255,0.1), rgba(247,120,186,0.1)); border-bottom: 1px solid var(--color-border); }
+        .lesson-header h1 { font-size: clamp(2rem, 8vw, 3rem); line-height: 1.2; color: white; margin-bottom: 0.5rem; }
+        .lesson-header .day-number { background: var(--color-primary); color: var(--color-bg); padding: 0.5rem 1.25rem; border-radius: 50px; font-weight: 700; display: inline-block; margin-bottom: 1rem; }
+        .lesson-content { padding: 2rem 1.5rem; }
+        .lesson-content .section { margin-bottom: 2.5rem; }
+        .lesson-content h2 { font-size: 1.6rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem; color: white; border-bottom: 1px solid var(--color-border); padding-bottom: 0.75rem; }
+        .lesson-content h2 .icon { color: var(--color-primary); }
+        .lesson-content .highlight-box { background: linear-gradient(90deg, var(--color-primary), var(--color-accent)); color: white; padding: 2rem; border-radius: var(--border-radius); margin: 2.5rem 0; text-align: center; }
+        .lesson-content .highlight-box h3 { color: white; }
+        .scroll-reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+        .scroll-reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* --- 6. Styling untuk Komponen Interaktif Pelajaran --- */
+        .lesson-content .interactive-card { background: rgba(255, 255, 255, 0.03); border: 1px solid var(--color-border); border-radius: var(--border-radius); padding: 1.5rem; margin-bottom: 1rem; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .lesson-content .interactive-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(88, 166, 255, 0.1); border-color: var(--color-primary); }
+        .interactive-card strong { color: var(--color-primary); font-size: 1.1rem; display: flex; align-items: center; gap: 0.75rem; }
+        .interactive-card p { color: var(--color-text-muted); margin-top: 0.5rem; }
+        .accordion-item { background-color: rgba(255, 255, 255, 0.03); border: 1px solid var(--color-border); border-radius: var(--border-radius); margin-bottom: 1rem; overflow: hidden; }
+        .accordion-header { padding: 1.25rem 1.5rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: background-color 0.3s ease; }
+        .accordion-header:hover { background-color: rgba(88, 166, 255, 0.1); }
+        .accordion-header h4 { margin: 0; color: white; display: flex; align-items: center; gap: 0.75rem; }
+        .accordion-header .icon-toggle { transition: transform 0.3s ease; color: var(--color-primary); }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out, padding 0.4s ease-out; padding: 0 1.5rem; }
+        .accordion-content p { padding-bottom: 1.5rem; color: var(--color-text-muted); }
+        .accordion-item.active .accordion-content { max-height: 300px; }
+        .accordion-item.active .icon-toggle { transform: rotate(180deg); }
+        .quiz-container { margin-bottom: 1.5rem; border: 1px solid var(--color-border); padding: 1.5rem; border-radius: var(--border-radius); }
+        .quiz-question { font-weight: 600; margin-bottom: 1rem; color: white; }
+        .quiz-option { background: rgba(255, 255, 255, 0.05); border: 1px solid var(--color-border); border-radius: 8px; padding: 0.75rem 1.25rem; margin-bottom: 0.75rem; cursor: pointer; transition: all 0.3s ease; }
+        .quiz-option:hover { background: rgba(88, 166, 255, 0.1); border-color: var(--color-primary); }
+        .quiz-option.correct { background-color: rgba(46, 160, 67, 0.2); border-color: var(--color-success); color: #56d364; font-weight: bold; }
+        .quiz-option.incorrect { background-color: rgba(248, 81, 73, 0.2); border-color: var(--color-danger); color: #ff7b72; }
+        .quiz-feedback { margin-top: 1rem; padding: 1rem; border-radius: 8px; display: none; font-weight: 600; }
+        .quiz-feedback.correct { background-color: rgba(46, 160, 67, 0.2); color: #56d364; }
+        .quiz-feedback.incorrect { background-color: rgba(248, 81, 73, 0.2); color: #ff7b72; }
+
+        /* --- 7. Footer --- */
+        .footer { text-align: center; padding: 2rem; margin-top: 4rem; color: var(--color-text-muted); font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    <main class="container">
+        <div id="homeView">
+            <header class="header">
+                <h1>Jago Trading dalam 365 Hari</h1>
+                <p class="tagline">Panduan Lengkap dari Nol hingga Mahir: Kuasai Forex, Saham, dan Kripto dalam Setahun.</p>
+            </header>
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Cari materi (misal: candlestick, smc, hari 10)...">
+            </div>
+            <div class="grid-nav" id="navigationGrid"></div>
+        </div>
+        <div id="lessonView" class="view-hidden">
+            <button id="backButton"><i class="fas fa-arrow-left"></i> Kembali ke Daftar Isi</button>
+            <div id="lessonContainer"></div>
+        </div>
+    </main>
+    <footer class="footer">
+        <p>&copy; 2025 | Proyek Belajar 365 Hari</p>
+    </footer>
+
+    <!-- Library untuk Animasi Partikel -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
+    <script>
+        // --- Konfigurasi Animasi Partikel ---
+        particlesJS("particles-js", { particles: { number: { value: 50 }, color: { value: "#58a6ff" }, shape: { type: "circle" }, opacity: { value: 0.3, random: true }, size: { value: 3, random: true }, line_linked: { enable: true, distance: 150, color: "#8b949e", opacity: 0.2 }, move: { enable: true, speed: 1, direction: "none", out_mode: "out" } }, interactivity: { detect_on: "canvas", events: { onhover: { enable: true, mode: "grab" }, onclick: { enable: false } }, modes: { grab: { distance: 140, line_linked: { opacity: 0.5 } } } } });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Inisialisasi Elemen DOM ---
+            const homeView = document.getElementById('homeView');
+            const lessonView = document.getElementById('lessonView');
+            const navigationGrid = document.getElementById('navigationGrid');
+            const searchInput = document.getElementById('searchInput');
+            const lessonContainer = document.getElementById('lessonContainer');
+            const backButton = document.getElementById('backButton');
+            
+            // --- Data Materi (Bisa diperbanyak) ---
+            // Versi yang sudah diperbarui dengan Hari ke-10
+            const learningDays = [
+    { day: 1, title: "Mengapa Trading? Tujuan, Risiko, dan Potensi", icon: "fa-shield-halved" },
+    { day: 2, title: "Mengenal Pasar Forex: Pasangan Mata Uang", icon: "fa-dollar-sign" },
+    { day: 3, title: "Pip, Lot, dan Leverage: Fondasi Perhitungan", icon: "fa-book" },
+    { day: 4, title: "Broker Forex: Memilih Mitra yang Tepat", icon: "fa-dollar-sign" },
+    { day: 5, title: "Platform Trading: Menguasai MetaTrader 4/5", icon: "fa-book" },
+    { day: 6, title: "Jenis-jenis Order dalam Trading", icon: "fa-book" },
+    { day: 7, title: "Evaluasi Mingguan & Rencana ke Depan", icon: "fa-check-circle" },
+    { day: 8, title: "Pengenalan Chart Candlestick", icon: "fa-chart-column" },
+    { day: 9, title: "Pola Candlestick Dasar: Reversal & Continuation", icon: "fa-chart-column" },
+    { day: 10, title: "Support dan Resistance: Fondasi Analisis Teknikal", icon: "fa-layer-group" },
+    { day: 11, title: "Tren Pasar: Uptrend, Downtrend, Sideways", icon: "fa-book" },
+    { day: 12, title: "Pengenalan Analisis Fundamental: Berita Ekonomi", icon: "fa-newspaper" },
+    { day: 13, title: "Manajemen Risiko Dasar: Mengapa Penting?", icon: "fa-shield-halved" },
+    { day: 14, title: "Evaluasi Mingguan & Rencana ke Depan", icon: "fa-check-circle" },
+    { day: 15, title: "Mengenal Indikator Teknikal: Moving Average", icon: "fa-chart-line" },
+    { day: 16, title: "Indikator Teknikal: Relative Strength Index (RSI)", icon: "fa-chart-line" },
+    { day: 17, title: "Indikator Teknikal: Stochastic Oscillator", icon: "fa-chart-line" },
+    { day: 18, title: "Pengenalan Pasar Saham: Dasar-dasar Investasi Saham", icon: "fa-building-columns" },
+    { day: 19, title: "Pengenalan Cryptocurrency: Dunia Aset Digital", icon: "fa-bitcoin-sign" },
+    { day: 20, title: "Perbandingan Forex, Saham, dan Crypto: Kelebihan & Kekurangan", icon: "fa-dollar-sign" },
+    { day: 21, title: "Evaluasi Mingguan & Rencana ke Depan", icon: "fa-check-circle" },
+    { day: 22, title: "Pengenalan Pola Chart: Double Top & Double Bottom", icon: "fa-chart-column" },
+    { day: 23, title: "Pola Chart: Head and Shoulders", icon: "fa-chart-column" },
+    { day: 24, title: "Pengenalan Fibonacci Retracement", icon: "fa-spiral" },
+    { day: 25, title: "Timeframe dalam Trading: Memilih yang Tepat", icon: "fa-book" },
+    { day: 26, title: "Jurnal Trading: Mengapa Penting dan Cara Membuatnya", icon: "fa-book-open" },
+    { day: 27, title: "Pengenalan Psikologi Trading: Emosi dan Disiplin", icon: "fa-heart" },
+    { day: 28, title: "Evaluasi Mingguan & Rencana ke Depan", icon: "fa-check-circle" },
+    { day: 29, title: "Pengenalan Analisis Sentimen Pasar", icon: "fa-book" },
+    { day: 30, title: "Money Management: Ukuran Posisi yang Tepat", icon: "fa-book" },
+    { day: 31, title: "Evaluasi Mingguan & Rencana ke Depan", icon: "fa-check-circle" },
+    { day: 32, title: "Pengenalan Konsep Supply and Demand", icon: "fa-book" },
+    { day: 33, title: "Order Block: Jejak Institusi di Pasar", icon: "fa-book" },
+    { day: 34, title: "Fair Value Gap (FVG): Inefisiensi Pasar", icon: "fa-book" },
+    { day: 35, title: "Konsep Likuiditas: Bahan Bakar Pergerakan Harga", icon: "fa-book" },
+    { day: 36, title: "Pengenalan Smart Money Concepts (SMC)", icon: "fa-brain" },
+    { day: 37, title: "Evaluasi Mingguan & Rencana ke Depan", icon: "fa-check-circle" },
+    { day: 38, title: "Pengenalan Konsep Market Structure: BOS dan CHOCH", icon: "fa-book" },
+    { day: 39, title: "Inducement: Jebakan Likuiditas", icon: "fa-book" },
+    { day: 40, title: "Premium dan Discount Zone: Area Ideal untuk Entry", icon: "fa-book" },
+    { day: 41, title: "Pengenalan Konsep Liquidity Pool dan Liquidity Void", icon: "fa-book" },
+    { day: 42, title: "Menggabungkan Smart Money Concepts (SMC) untuk Setup Trading", icon: "fa-brain" },
+    { day: 43, title: "Evaluasi Mingguan & Rencana ke Depan", icon: "fa-check-circle" },
+    { day: 44, title: "Pengenalan Konsep Order Flow: Volume dan Price Action", icon: "fa-book" },
+    { day: 45, title: "Pengenalan Konsep Order Block Lanjutan", icon: "fa-book" },
+    { day: 46, title: "Pengenalan Konsep Fair Value Gap (FVG) Lanjutan", icon: "fa-book" },
+    { day: 47, title: "Pengenalan Konsep Liquidity Pool dan Liquidity Void Lanjutan", icon: "fa-book" },
+    { day: 48, title: "Menggabungkan Smart Money Concepts (SMC) untuk Setup Trading Lanjutan", icon: "fa-brain" },
+    { day: 49, title: "Evaluasi Mingguan & Rencana ke Depan", icon: "fa-check-circle" },
+    { day: 50, title: "Pengenalan Konsep Supply and Demand Lanjutan", icon: "fa-book" },
+    { day: 51, title: "Pengenalan Pasar Obligasi", icon: "fa-book" },
+    { day: 52, title: "Pengenalan Pasar Komoditas", icon: "fa-book" },
+    { day: 53, title: "Pengenalan Pasar Indeks", icon: "fa-book" },
+    { day: 54, title: "Pengenalan Pasar Futures", icon: "fa-book" },
+    { day: 55, title: "Pengenalan Pasar Options", icon: "fa-book" },
+    { day: 56, title: "Evaluasi Mingguan & Rencana ke Depan", icon: "fa-check-circle" },
+    { day: 57, title: "Strategi Trading Sederhana: Breakout Trading", icon: "fa-chess" },
+    { day: 58, title: "Strategi Trading Sederhana: Trend Following", icon: "fa-chess" },
+    { day: 59, title: "Strategi Trading Sederhana: Range Trading", icon: "fa-chess" },
+    { day: 60, title: "Pengenalan Backtesting Manual", icon: "fa-book" },
+    { day: 61, title: "Pentingnya Jurnal Trading Lanjutan", icon: "fa-book-open" },
+    { day: 62, title: "Mengembangkan Rencana Trading Pribadi (Draft Awal)", icon: "fa-book" },
+    { day: 63, title: "Evaluasi Mingguan & Rencana ke Depan", icon: "fa-check-circle" },
+    { day: 64, title: "Mengatasi Fear of Missing Out (FOMO)", icon: "fa-book" },
+    { day: 65, title: "Mengelola Greed (Keserakahan)", icon: "fa-book" },
+    { day: 66, title: "Pentingnya Disiplin dan Kesabaran", icon: "fa-book" },
+    { day: 67, title: "Mengembangkan Mindset Trader yang Positif", icon: "fa-book" },
+    { day: 68, title: "Mengenali dan Mengatasi Bias Kognitif dalam Trading", icon: "fa-book" },
+    { day: 69, title: "Latihan Mindfulness untuk Trader", icon: "fa-book" },
+    { day: 70, title: "Evaluasi Mingguan & Rencana ke Depan", icon: "fa-check-circle" },
+    { day: 71, title: "Rasio Risk-Reward: Mengapa Penting?", icon: "fa-book" },
+    { day: 72, title: "Menghitung Ukuran Posisi yang Optimal", icon: "fa-book" },
+    { day: 73, title: "Strategi Penempatan Stop Loss yang Cerdas", icon: "fa-chess" },
+    { day: 74, title: "Strategi Penempatan Take Profit yang Efektif", icon: "fa-chess" },
+    { day: 75, title: "Trailing Stop: Mengunci Keuntungan", icon: "fa-book" },
+    { day: 76, title: "Diversifikasi Portofolio Awal", icon: "fa-book" },
+    { day: 77, title: "Evaluasi Mingguan & Rencana ke Depan", icon: "fa-check-circle" },
+    { day: 78, title: "Membaca Laporan Ekonomi Penting (NFP, CPI, Suku Bunga)", icon: "fa-book" },
+    { day: 79, title: "Dampak Berita Ekonomi terhadap Pasar", icon: "fa-newspaper" },
+    { day: 80, title: "Menggunakan Kalender Ekonomi secara Efektif", icon: "fa-book" },
+    { day: 81, title: "Trading Berita vs. Menghindari Trading Berita", icon: "fa-newspaper" },
+    { day: 82, title: "Analisis Makroekonomi Dasar untuk Trader", icon: "fa-book" },
+    { day: 83, title: "Korelasi Antar Mata Uang dan Komoditas", icon: "fa-dollar-sign" },
+    { day: 84, title: "Evaluasi Mingguan & Rencana ke Depan", icon: "fa-check-circle" },
+    { day: 85, title: "Apa itu Trading Otomatis?", icon: "fa-robot" },
+    { day: 86, title: "Pengenalan Expert Advisors (EA)", icon: "fa-book" },
+    { day: 87, title: "Kelebihan dan Kekurangan EA", icon: "fa-book" },
+    { day: 88, title: "Cara Menginstal dan Menggunakan EA Dasar", icon: "fa-book" },
+    { day: 89, title: "Memahami Parameter EA", icon: "fa-book" },
+    { day: 90, title: "Risiko Penggunaan EA", icon: "fa-shield-halved" },
+    { day: 91, title: "Evaluasi Mingguan & Rencana ke Depan", icon: "fa-check-circle" },
+    { day: 92, title: "Komponen Sistem Trading yang Efektif", icon: "fa-book" },
+    { day: 93, title: "Mengembangkan Aturan Masuk (Entry Rules)", icon: "fa-book" },
+    { day: 94, title: "Mengembangkan Aturan Keluar (Exit Rules)", icon: "fa-book" },
+    { day: 95, title: "Mengembangkan Aturan Manajemen Risiko", icon: "fa-shield-halved" },
+    { day: 96, title: "Contoh Sistem Trading Sederhana (Studi Kasus)", icon: "fa-book" },
+    { day: 97, title: "Menguji Sistem Trading Anda (Forward Testing)", icon: "fa-book" },
+    { day: 98, title: "Evaluasi Mingguan & Rencana ke Depan", icon: "fa-check-circle" },
+    { day: 99, title: "Review Pola Candlestick Pembalikan (Bagian 1)", icon: "fa-chart-column" },
+    { day: 100, title: "Review Pola Candlestick Pembalikan (Bagian 2)", icon: "fa-chart-column" },
+    { day: 101, title: "Review Pola Candlestick Kelanjutan", icon: "fa-chart-column" },
+    { day: 102, title: "Review Pola Chart Lanjutan (Double Top & Double Bottom)", icon: "fa-chart-column" },
+    { day: 103, title: "Review Pola Chart Lanjutan (Head and Shoulders)", icon: "fa-chart-column" },
+    { day: 104, title: "Review Fibonacci Retracement", icon: "fa-check-circle" },
+    { day: 105, title: "Evaluasi Mingguan & Rencana ke Depan", icon: "fa-check-circle" },
+    { day: 106, title: "Review Indikator Teknikal: Moving Average (MA)", icon: "fa-check-circle" },
+    { day: 107, title: "Review Indikator Teknikal: Relative Strength Index (RSI)", icon: "fa-check-circle" },
+    { day: 108, title: "Review Indikator Teknikal: Stochastic Oscillator", icon: "fa-check-circle" },
+    { day: 109, title: "Review Indikator Teknikal: MACD (Moving Average Convergence Divergence)", icon: "fa-check-circle" },
+    { day: 110, title: "Review Indikator Teknikal: Bollinger Bands", icon: "fa-check-circle" },
+    { day: 111, title: "Review Indikator Volume", icon: "fa-check-circle" },
+    { day: 112, title: "Evaluasi Mingguan & Rencana ke Depan (Review Indikator)", icon: "fa-check-circle" },
+    { day: 113, title: "Review Manajemen Risiko Dasar: Mengapa Penting?", icon: "fa-shield-halved" },
+    { day: 114, title: "Review Ukuran Posisi", icon: "fa-check-circle" },
+    { day: 115, title: "Review Rasio Risk-Reward (RR)", icon: "fa-check-circle" },
+    { day: 116, title: "Review Psikologi Trading: Fear, Greed, Discipline", icon: "fa-heart" },
+    { day: 117, title: "Review Jurnal Trading", icon: "fa-check-circle" },
+    { day: 118, title: "Review Rencana Trading Pribadi", icon: "fa-check-circle" },
+    { day: 119, title: "Evaluasi Mingguan & Rencana ke Depan (Review Manajemen Risiko & Psikologi)", icon: "fa-heart" },
+    { day: 120, title: "Evaluasi Akhir Fase Newbie & Persiapan Fase Intermediate", icon: "fa-check-circle" },
+    { day: 121, title: "Strategi Price Action Lanjutan (Pin Bar, Inside Bar, dll.)", icon: "fa-chess" },
+    { day: 122, title: "Strategi Price Action Lanjutan (Pin Bar, Inside Bar, dll.)", icon: "fa-chess" },
+    { day: 123, title: "Strategi Berbasis Indikator (Gabungan MA, RSI, Stochastic)", icon: "fa-chess" },
+    { day: 124, title: "Strategi Multi-Timeframe Trading", icon: "fa-chess" },
+    { day: 125, title: "Strategi Swing Trading", icon: "fa-chess" },
+    { day: 126, title: "Strategi Day Trading", icon: "fa-chess" },
+    { day: 127, title: "Strategi Scalping (Pengenalan Risiko Tinggi)", icon: "fa-shield-halved" },
+    { day: 128, title: "Strategi Position Trading (Jangka Panjang)", icon: "fa-chess" },
+    { day: 129, title: "Strategi Trading Berita (High Impact News)", icon: "fa-chess" },
+    { day: 130, title: "Strategi Korelasi Mata Uang", icon: "fa-dollar-sign" },
+    { day: 131, title: "Strategi Trading Musiman", icon: "fa-chess" },
+    { day: 132, title: "Strategi Trading Berdasarkan Sentimen Pasar", icon: "fa-chess" },
+    { day: 133, title: "Strategi Trading Berdasarkan Volume", icon: "fa-chess" },
+    { day: 134, title: "Strategi Trading Menggunakan Pola Harmonic", icon: "fa-chess" },
+    { day: 135, title: "Strategi Trading Menggunakan Gelombang Elliott", icon: "fa-chess" },
+    { day: 136, title: "Strategi Trading Menggunakan Supply and Demand Zone Lanjutan", icon: "fa-chess" },
+    { day: 137, title: "Strategi Trading Menggunakan Order Block dan FVG Lanjutan", icon: "fa-chess" },
+    { day: 138, title: "Mengembangkan dan Menguji Strategi Pribadi", icon: "fa-chess" },
+    { day: 139, title: "Evaluasi Mingguan & Rencana ke Depan", icon: "fa-check-circle" },
+    { day: 140, title: "Strategi Price Action Lanjutan (Lanjutan)", icon: "fa-chess" },
+    { day: 141, title: "Strategi Berbasis Indikator (Lanjutan)", icon: "fa-chess" },
+    { day: 142, title: "Strategi Multi-Timeframe Trading (Lanjutan)", icon: "fa-chess" },
+    { day: 143, title: "Strategi Swing Trading (Lanjutan)", icon: "fa-chess" },
+    { day: 144, title: "Strategi Day Trading (Lanjutan)", icon: "fa-chess" },
+    { day: 145, title: "Strategi Scalping (Lanjutan)", icon: "fa-chess" },
+    { day: 146, title: "Strategi Position Trading (Lanjutan)", icon: "fa-chess" },
+    { day: 147, title: "Strategi Trading Berita (Lanjutan)", icon: "fa-chess" },
+    { day: 148, title: "Strategi Korelasi Mata Uang (Lanjutan)", icon: "fa-dollar-sign" },
+    { day: 149, title: "Strategi Trading Musiman (Lanjutan)", icon: "fa-chess" },
+    { day: 150, title: "Strategi Trading Berdasarkan Sentimen Pasar (Lanjutan)", icon: "fa-chess" },
+    { day: 151, title: "Strategi Trading Berdasarkan Volume (Lanjutan)", icon: "fa-chess" },
+    { day: 152, title: "Strategi Trading Menggunakan Pola Harmonic (Lanjutan)", icon: "fa-chess" },
+    { day: 153, title: "Strategi Trading Menggunakan Gelombang Elliott (Lanjutan)", icon: "fa-chess" },
+    { day: 154, title: "Strategi Trading Menggunakan Supply and Demand Zone Lanjutan (Lanjutan)", icon: "fa-chess" },
+    { day: 155, title: "Strategi Trading Menggunakan Order Block dan FVG Lanjutan (Lanjutan)", icon: "fa-chess" },
+    { day: 156, title: "Mengembangkan dan Menguji Strategi Pribadi (Lanjutan)", icon: "fa-chess" },
+    { day: 157, title: "Evaluasi Mingguan & Rencana ke Depan", icon: "fa-check-circle" },
+    { day: 158, title: "Strategi Price Action Lanjutan (Lanjutan)", icon: "fa-chess" },
+    { day: 159, title: "Strategi Berbasis Indikator (Lanjutan)", icon: "fa-chess" },
+    { day: 160, title: "Strategi Multi-Timeframe Trading (Lanjutan)", icon: "fa-chess" },
+    { day: 161, title: "Strategi Swing Trading (Lanjutan)", icon: "fa-chess" },
+    { day: 162, title: "Strategi Day Trading (Lanjutan)", icon: "fa-chess" },
+    { day: 163, title: "Strategi Scalping (Lanjutan)", icon: "fa-chess" },
+    { day: 164, title: "Strategi Position Trading (Lanjutan)", icon: "fa-chess" },
+    { day: 165, title: "Strategi Trading Berita (Lanjutan)", icon: "fa-chess" },
+    { day: 166, title: "Strategi Korelasi Mata Uang (Lanjutan)", icon: "fa-dollar-sign" },
+    { day: 167, title: "Strategi Trading Musiman (Lanjutan)", icon: "fa-chess" },
+    { day: 168, title: "Strategi Trading Berdasarkan Sentimen Pasar (Lanjutan)", icon: "fa-chess" },
+    { day: 169, title: "Strategi Trading Berdasarkan Volume (Lanjutan)", icon: "fa-chess" },
+    { day: 170, title: "Strategi Trading Menggunakan Pola Harmonic (Lanjutan)", icon: "fa-chess" },
+    { day: 171, title: "Strategi Trading Menggunakan Gelombang Elliott (Lanjutan)", icon: "fa-chess" },
+    { day: 172, title: "Strategi Trading Menggunakan Supply and Demand Zone Lanjutan (Lanjutan)", icon: "fa-chess" },
+    { day: 173, title: "Strategi Trading Menggunakan Order Block dan FVG Lanjutan (Lanjutan)", icon: "fa-chess" },
+    { day: 174, title: "Mengembangkan dan Menguji Strategi Pribadi (Lanjutan)", icon: "fa-chess" },
+    { day: 175, title: "Evaluasi Mingguan & Rencana ke Depan", icon: "fa-check-circle" },
+    { day: 176, title: "Strategi Price Action Lanjutan (Lanjutan)", icon: "fa-chess" },
+    { day: 177, title: "Strategi Berbasis Indikator (Lanjutan)", icon: "fa-chess" },
+    { day: 178, title: "Strategi Multi-Timeframe Trading (Lanjutan)", icon: "fa-chess" },
+    { day: 179, title: "Strategi Swing Trading (Lanjutan)", icon: "fa-chess" },
+    { day: 180, title: "Strategi Day Trading (Lanjutan)", icon: "fa-chess" },
+    { day: 181, title: "Strategi Scalping (Lanjutan)", icon: "fa-chess" },
+    { day: 182, title: "Strategi Position Trading (Lanjutan)", icon: "fa-chess" },
+    { day: 183, title: "Strategi Trading Berita (Lanjutan)", icon: "fa-chess" },
+    { day: 184, title: "Strategi Korelasi Mata Uang (Lanjutan)", icon: "fa-dollar-sign" },
+    { day: 185, title: "Strategi Trading Musiman (Lanjutan)", icon: "fa-chess" },
+    { day: 186, title: "Strategi Trading Berdasarkan Sentimen Pasar (Lanjutan)", icon: "fa-chess" },
+    { day: 187, title: "Strategi Trading Berdasarkan Volume (Lanjutan)", icon: "fa-chess" },
+    { day: 188, title: "Strategi Trading Menggunakan Pola Harmonic (Lanjutan)", icon: "fa-chess" },
+    { day: 189, title: "Strategi Trading Menggunakan Gelombang Elliott (Lanjutan)", icon: "fa-chess" },
+    { day: 190, title: "Strategi Trading Menggunakan Supply and Demand Zone Lanjutan (Lanjutan)", icon: "fa-chess" },
+    { day: 191, title: "Strategi Trading Menggunakan Order Block dan FVG Lanjutan (Lanjutan)", icon: "fa-chess" },
+    { day: 192, title: "Mengembangkan dan Menguji Strategi Pribadi (Lanjutan)", icon: "fa-chess" },
+    { day: 193, title: "Evaluasi Mingguan & Rencana ke Depan", icon: "fa-check-circle" },
+    { day: 194, title: "Strategi Price Action Lanjutan (Lanjutan)", icon: "fa-chess" },
+    { day: 195, title: "Strategi Berbasis Indikator (Lanjutan)", icon: "fa-chess" },
+    { day: 196, title: "Strategi Multi-Timeframe Trading (Lanjutan)", icon: "fa-chess" },
+    { day: 197, title: "Strategi Swing Trading (Lanjutan)", icon: "fa-chess" },
+    { day: 198, title: "Strategi Day Trading (Lanjutan)", icon: "fa-chess" },
+    { day: 199, title: "Strategi Scalping (Lanjutan)", icon: "fa-chess" },
+    { day: 200, title: "Strategi Position Trading (Lanjutan)", icon: "fa-chess" },
+    { day: 201, title: "Strategi Trading Berita (Lanjutan)", icon: "fa-chess" },
+    { day: 202, title: "Strategi Korelasi Mata Uang (Lanjutan)", icon: "fa-dollar-sign" },
+    { day: 203, title: "Strategi Trading Musiman (Lanjutan)", icon: "fa-chess" },
+    { day: 204, title: "Strategi Trading Berdasarkan Sentimen Pasar (Lanjutan)", icon: "fa-chess" },
+    { day: 205, title: "Strategi Trading Berdasarkan Volume (Lanjutan)", icon: "fa-chess" },
+    { day: 206, title: "Strategi Trading Menggunakan Pola Harmonic (Lanjutan)", icon: "fa-chess" },
+    { day: 207, title: "Strategi Trading Menggunakan Gelombang Elliott (Lanjutan)", icon: "fa-chess" },
+    { day: 208, title: "Strategi Trading Menggunakan Supply and Demand Zone Lanjutan (Lanjutan)", icon: "fa-chess" },
+    { day: 209, title: "Strategi Trading Menggunakan Order Block dan FVG Lanjutan (Lanjutan)", icon: "fa-chess" },
+    { day: 210, title: "Mengembangkan dan Menguji Strategi Pribadi (Lanjutan)", icon: "fa-chess" },
+    { day: 211, title: "Evaluasi Mingguan & Rencana ke Depan", icon: "fa-check-circle" },
+    { day: 212, title: "Strategi Price Action Lanjutan (Lanjutan)", icon: "fa-chess" },
+    { day: 213, title: "Strategi Berbasis Indikator (Lanjutan)", icon: "fa-chess" },
+    { day: 214, title: "Strategi Multi-Timeframe Trading (Lanjutan)", icon: "fa-chess" },
+    { day: 215, title: "Strategi Swing Trading (Lanjutan)", icon: "fa-chess" },
+    { day: 216, title: "Strategi Day Trading (Lanjutan)", icon: "fa-chess" },
+    { day: 217, title: "Strategi Scalping (Lanjutan)", icon: "fa-chess" },
+    { day: 218, title: "Strategi Position Trading (Lanjutan)", icon: "fa-chess" },
+    { day: 219, title: "Strategi Trading Berita (Lanjutan)", icon: "fa-chess" },
+    { day: 220, title: "Strategi Korelasi Mata Uang (Lanjutan)", icon: "fa-dollar-sign" },
+    { day: 221, title: "Strategi Trading Musiman (Lanjutan)", icon: "fa-chess" },
+    { day: 222, title: "Strategi Trading Berdasarkan Sentimen Pasar (Lanjutan)", icon: "fa-chess" },
+    { day: 223, title: "Strategi Trading Berdasarkan Volume (Lanjutan)", icon: "fa-chess" },
+    { day: 224, title: "Strategi Trading Menggunakan Pola Harmonic (Lanjutan)", icon: "fa-chess" },
+    { day: 225, title: "Strategi Trading Menggunakan Gelombang Elliott (Lanjutan)", icon: "fa-chess" },
+    { day: 226, title: "Strategi Trading Menggunakan Supply and Demand Zone Lanjutan (Lanjutan)", icon: "fa-chess" },
+    { day: 227, title: "Strategi Trading Menggunakan Order Block dan FVG Lanjutan (Lanjutan)", icon: "fa-chess" },
+    { day: 228, title: "Mengembangkan dan Menguji Strategi Pribadi (Lanjutan)", icon: "fa-chess" },
+    { day: 229, title: "Evaluasi Mingguan & Rencana ke Depan", icon: "fa-check-circle" },
+    { day: 230, title: "Strategi Price Action Lanjutan (Lanjutan)", icon: "fa-chess" },
+    { day: 231, title: "Strategi Berbasis Indikator (Lanjutan)", icon: "fa-chess" },
+    { day: 232, title: "Strategi Multi-Timeframe Trading (Lanjutan)", icon: "fa-chess" },
+    { day: 233, title: "Strategi Swing Trading (Lanjutan)", icon: "fa-chess" },
+    { day: 234, title: "Strategi Day Trading (Lanjutan)", icon: "fa-chess" },
+    { day: 235, title: "Strategi Scalping (Lanjutan)", icon: "fa-chess" },
+    { day: 236, title: "Strategi Position Trading (Lanjutan)", icon: "fa-chess" },
+    { day: 237, title: "Strategi Trading Berita (Lanjutan)", icon: "fa-chess" },
+    { day: 238, title: "Strategi Korelasi Mata Uang (Lanjutan)", icon: "fa-dollar-sign" },
+    { day: 239, title: "Strategi Trading Musiman (Lanjutan)", icon: "fa-chess" },
+    { day: 240, title: "Evaluasi Akhir Fase Intermediate & Persiapan Fase Expert", icon: "fa-check-circle" },
+    { day: 241, title: "Mengoptimalkan Aturan Entry dan Exit", icon: "fa-book" },
+    { day: 242, title: "Mengelola Drawdown dan Recovery", icon: "fa-book" },
+    { day: 243, title: "Mengembangkan Sistem Trading yang Robust (Tahan Banting)", icon: "fa-book" },
+    { day: 244, title: "Pengenalan Backtesting Otomatis (Menggunakan Strategy Tester MT4/5)", icon: "fa-book" },
+    { day: 245, title: "Menginterpretasikan Hasil Backtesting", icon: "fa-book" },
+    { day: 246, title: "Optimasi Parameter Sistem Trading", icon: "fa-book" },
+    { day: 247, title: "Evaluasi Mingguan & Rencana ke Depan", icon: "fa-check-circle" },
+    { day: 248, title: "Forward Testing Lanjutan dan Real-Time Data", icon: "fa-book" },
+    { day: 249, title: "Membangun Portofolio Strategi Trading", icon: "fa-chess" },
+    { day: 250, title: "Diversifikasi Portofolio Lanjutan (Korelasi Antar Aset)", icon: "fa-book" },
+    { day: 251, title: "Pengenalan Trading Algoritmik dan Bot Trading", icon: "fa-book" },
+    { day: 252, title: "Memahami VPS (Virtual Private Server) untuk Trading Otomatis", icon: "fa-robot" },
+    { day: 253, title: "Manajemen Portofolio Lanjutan dan Alokasi Aset", icon: "fa-shield-halved" },
+    { day: 254, title: "Evaluasi Mingguan & Rencana ke Depan", icon: "fa-check-circle" },
+    { day: 255, title: "Pajak Trading dan Regulasi (Dasar-dasar)", icon: "fa-book" },
+    { day: 256, title: "Menjadi Trader Profesional: Disiplin dan Konsistensi", icon: "fa-book" },
+    { day: 257, title: "Pentingnya Mentoring dan Komunitas Trading", icon: "fa-book" },
+    { day: 258, title: "Mengembangkan Rencana Bisnis Trading", icon: "fa-book" },
+    { day: 259, title: "Mengelola Keuangan Pribadi sebagai Trader", icon: "fa-book" },
+    { day: 260, title: "Review Komprehensif Seluruh Materi (Fase Newbie)", icon: "fa-check-circle" },
+    { day: 261, title: "Evaluasi Mingguan & Rencana ke Depan", icon: "fa-check-circle" },
+    { day: 262, title: "Review Komprehensif Seluruh Materi (Fase Intermediate)", icon: "fa-check-circle" },
+    { day: 263, title: "Studi Kasus: Analisis Trade Sukses", icon: "fa-book" },
+    { day: 264, title: "Studi Kasus: Analisis Trade Gagal dan Pelajarannya", icon: "fa-book" },
+    { day: 265, title: "Mengembangkan Sistem Pencatatan Trade yang Lebih Canggih", icon: "fa-book" },
+    { day: 266, title: "Menggunakan Data Historis untuk Mengidentifikasi Peluang", icon: "fa-book" },
+    { day: 267, title: "Membangun Keunggulan Kompetitif dalam Trading", icon: "fa-book" },
+    { day: 268, title: "Evaluasi Mingguan & Rencana ke Depan", icon: "fa-check-circle" },
+    { day: 269, title: "Psikologi Trading Tingkat Lanjut: Mengatasi Overtrading", icon: "fa-heart" },
+    { day: 270, title: "Psikologi Trading Tingkat Lanjut: Mengatasi Revenge Trading", icon: "fa-heart" },
+    { day: 271, title: "Psikologi Trading Tingkat Lanjut: Mengelola Ekspektasi Realistis", icon: "fa-heart" },
+    { day: 272, title: "Psikologi Trading Tingkat Lanjut: Membangun Ketahanan Mental", icon: "fa-heart" },
+    { day: 273, title: "Psikologi Trading Tingkat Lanjut: Pentingnya Istirahat dan Keseimbangan Hidup", icon: "fa-heart" },
+    { day: 274, title: "Psikologi Trading Tingkat Lanjut: Mengembangkan Intuisi Trader", icon: "fa-heart" },
+    { day: 275, title: "Evaluasi Mingguan & Rencana ke Depan", icon: "fa-check-circle" },
+    { day: 276, title: "Manajemen Risiko Tingkat Lanjut: Hedging", icon: "fa-shield-halved" },
+    { day: 277, title: "Manajemen Risiko Tingkat Lanjut: Diversifikasi Lintas Aset", icon: "fa-shield-halved" },
+    { day: 278, title: "Manajemen Risiko Tingkat Lanjut: Penggunaan Options untuk Lindung Nilai", icon: "fa-shield-halved" },
+    { day: 279, title: "Manajemen Risiko Tingkat Lanjut: Mengelola Risiko Sistemik", icon: "fa-shield-halved" },
+    { day: 280, title: "Manajemen Risiko Tingkat Lanjut: Stress Testing Portofolio", icon: "fa-shield-halved" },
+    { day: 281, title: "Manajemen Risiko Tingkat Lanjut: Mengembangkan Rencana Darurat", icon: "fa-shield-halved" },
+    { day: 282, title: "Evaluasi Mingguan & Rencana ke Depan", icon: "fa-check-circle" },
+    { day: 283, title: "Pengenalan Trading Berita Tingkat Lanjut (High Frequency Trading)", icon: "fa-newspaper" },
+    { day: 284, title: "Pengenalan Arbitrage Trading", icon: "fa-book" },
+    { day: 285, title: "Pengenalan Algoritma Trading Sederhana", icon: "fa-book" },
+    { day: 286, title: "Memahami API Trading", icon: "fa-book" },
+    { day: 287, title: "Pengenalan Bahasa Pemrograman untuk Trading (misalnya Python)", icon: "fa-book" },
+    { day: 288, title: "Membangun Bot Trading Sederhana (Konsep)", icon: "fa-book" },
+    { day: 289, title: "Evaluasi Mingguan & Rencana ke Depan", icon: "fa-check-circle" },
+    { day: 290, title: "Memahami Pasar Derivatif Lebih Dalam", icon: "fa-book" },
+    { day: 291, title: "Pengenalan Kontrak Futures Lanjutan", icon: "fa-book" },
+    { day: 292, title: "Pengenalan Kontrak Options Lanjutan", icon: "fa-book" },
+    { day: 293, title: "Pengenalan Swap dan Forwards", icon: "fa-book" },
+    { day: 294, title: "Memahami Struktur Pasar Global", icon: "fa-book" },
+    { day: 295, title: "Peran Bank Sentral dalam Pasar Keuangan", icon: "fa-book" },
+    { day: 296, title: "Evaluasi Mingguan & Rencana ke Depan", icon: "fa-check-circle" },
+    { day: 297, title: "Membangun Jaringan Trader Profesional", icon: "fa-book" },
+    { day: 298, title: "Berpartisipasi dalam Forum dan Komunitas Trading", icon: "fa-book" },
+    { day: 299, title: "Mencari Mentor Trading", icon: "fa-book" },
+    { day: 300, title: "Menjadi Mentor bagi Trader Lain", icon: "fa-book" },
+    { day: 301, title: "Mengikuti Webinar dan Konferensi Trading", icon: "fa-book" },
+    { day: 302, title: "Membangun Personal Branding sebagai Trader", icon: "fa-book" },
+    { day: 303, title: "Evaluasi Mingguan & Rencana ke Depan", icon: "fa-check-circle" },
+    { day: 304, title: "Review Komprehensif: Analisis Teknikal (Pola, Indikator, SMC)", icon: "fa-brain" },
+    { day: 305, title: "Review Komprehensif: Analisis Fundamental (Makro, Berita)", icon: "fa-check-circle" },
+    { day: 306, title: "Review Komprehensif: Manajemen Risiko (Ukuran Posisi, RR, SL/TP)", icon: "fa-shield-halved" },
+    { day: 307, title: "Review Komprehensif: Psikologi Trading (Emosi, Disiplin, Mindset)", icon: "fa-heart" },
+    { day: 308, title: "Review Komprehensif: Sistem Trading (Entry, Exit, Konfirmasi)", icon: "fa-check-circle" },
+    { day: 309, title: "Review Komprehensif: Backtesting dan Optimasi", icon: "fa-check-circle" },
+    { day: 310, title: "Evaluasi Mingguan & Rencana ke Depan", icon: "fa-check-circle" },
+    { day: 311, title: "Latihan Simulasi Trading Penuh (Skenario Pasar Berbeda)", icon: "fa-book" },
+    { day: 312, title: "Latihan Simulasi Trading Penuh (Skenario Pasar Berbeda)", icon: "fa-book" },
+    { day: 313, title: "Latihan Simulasi Trading Penuh (Skenario Pasar Berbeda)", icon: "fa-book" },
+    { day: 314, title: "Latihan Simulasi Trading Penuh (Skenario Pasar Berbeda)", icon: "fa-book" },
+    { day: 315, title: "Latihan Simulasi Trading Penuh (Skenario Pasar Berbeda)", icon: "fa-book" },
+    { day: 316, title: "Latihan Simulasi Trading Penuh (Skenario Pasar Berbeda)", icon: "fa-book" },
+    { day: 317, title: "Evaluasi Mingguan & Rencana ke Depan", icon: "fa-check-circle" },
+    { day: 318, title: "Mengembangkan Rencana Trading Jangka Panjang (1-3 Tahun)", icon: "fa-book" },
+    { day: 319, title: "Menetapkan Tujuan Keuangan yang Realistis dari Trading", icon: "fa-book" },
+    { day: 320, title: "Membangun Sumber Pendapatan Tambahan di Luar Trading", icon: "fa-book" },
+    { day: 321, title: "Pentingnya Kesehatan Fisik dan Mental bagi Trader", icon: "fa-book" },
+    { day: 322, title: "Mengelola Stres dan Burnout dalam Trading", icon: "fa-book" },
+    { day: 323, title: "Membangun Rutinitas Harian yang Efektif untuk Trader", icon: "fa-book" },
+    { day: 324, title: "Evaluasi Mingguan & Rencana ke Depan", icon: "fa-check-circle" },
+    { day: 325, title: "Memahami Peran Teknologi dalam Trading Modern", icon: "fa-book" },
+    { day: 326, title: "Pengenalan Big Data dan Machine Learning dalam Analisis Pasar", icon: "fa-book" },
+    { day: 327, title: "Memahami Keamanan Siber dalam Trading Online", icon: "fa-book" },
+    { day: 328, title: "Etika Trading dan Tanggung Jawab Sosial", icon: "fa-book" },
+    { day: 329, title: "Memahami Perubahan Regulasi Pasar Global", icon: "fa-book" },
+    { day: 330, title: "Adaptasi Terhadap Perubahan Pasar dan Teknologi", icon: "fa-book" },
+    { day: 331, title: "Evaluasi Mingguan & Rencana ke Depan", icon: "fa-check-circle" },
+    { day: 332, title: "Refleksi Perjalanan 365 Hari: Apa yang Telah Dicapai", icon: "fa-book" },
+    { day: 333, title: "Refleksi Perjalanan 365 Hari: Tantangan yang Dihadapi", icon: "fa-book" },
+    { day: 334, title: "Refleksi Perjalanan 365 Hari: Pelajaran Terpenting", icon: "fa-book" },
+    { day: 335, title: "Menetapkan Tujuan Trading Jangka Panjang (5+ Tahun)", icon: "fa-book" },
+    { day: 336, title: "Pentingnya Pembelajaran Berkelanjutan dan Riset", icon: "fa-book" },
+    { day: 337, title: "Membangun Legacy sebagai Trader", icon: "fa-book" },
+    { day: 338, title: "Evaluasi Mingguan & Rencana ke Depan", icon: "fa-check-circle" },
+    { day: 339, title: "Latihan Simulasi Trading Komprehensif (Minggu Penuh)", icon: "fa-book" },
+    { day: 340, title: "Latihan Simulasi Trading Komprehensif (Minggu Penuh)", icon: "fa-book" },
+    { day: 341, title: "Latihan Simulasi Trading Komprehensif (Minggu Penuh)", icon: "fa-book" },
+    { day: 342, title: "Latihan Simulasi Trading Komprehensif (Minggu Penuh)", icon: "fa-book" },
+    { day: 343, title: "Latihan Simulasi Trading Komprehensif (Minggu Penuh)", icon: "fa-book" },
+    { day: 344, title: "Latihan Simulasi Trading Komprehensif (Minggu Penuh)", icon: "fa-book" },
+    { day: 345, title: "Evaluasi Mingguan & Rencana ke Depan", icon: "fa-check-circle" },
+    { day: 346, title: "Latihan Simulasi Trading Komprehensif (Minggu Penuh)", icon: "fa-book" },
+    { day: 347, title: "Latihan Simulasi Trading Komprehensif (Minggu Penuh)", icon: "fa-book" },
+    { day: 348, title: "Latihan Simulasi Trading Komprehensif (Minggu Penuh)", icon: "fa-book" },
+    { day: 349, title: "Latihan Simulasi Trading Komprehensif (Minggu Penuh)", icon: "fa-book" },
+    { day: 350, title: "Latihan Simulasi Trading Komprehensif (Minggu Penuh)", icon: "fa-book" },
+    { day: 351, title: "Latihan Simulasi Trading Komprehensif (Minggu Penuh)", icon: "fa-book" },
+    { day: 352, title: "Evaluasi Mingguan & Rencana ke Depan", icon: "fa-check-circle" },
+    { day: 353, title: "Latihan Simulasi Trading Komprehensif (Minggu Penuh)", icon: "fa-book" },
+    { day: 354, title: "Latihan Simulasi Trading Komprehensif (Minggu Penuh)", icon: "fa-book" },
+    { day: 355, title: "Latihan Simulasi Trading Komprehensif (Minggu Penuh)", icon: "fa-book" },
+    { day: 356, title: "Latihan Simulasi Trading Komprehensif (Minggu Penuh)", icon: "fa-book" },
+    { day: 357, title: "Latihan Simulasi Trading Komprehensif (Minggu Penuh)", icon: "fa-book" },
+    { day: 358, title: "Latihan Simulasi Trading Komprehensif (Minggu Penuh)", icon: "fa-book" },
+    { day: 359, title: "Evaluasi Mingguan & Rencana ke Depan", icon: "fa-check-circle" },
+    { day: 360, title: "Review Komprehensif Seluruh Materi (Fase Expert)", icon: "fa-check-circle" },
+    { day: 361, title: "Persiapan untuk Trading Nyata (Mental dan Fisik)", icon: "fa-book" },
+    { day: 362, title: "Membangun Jaringan Dukungan", icon: "fa-book" },
+    { day: 363, title: "Menentukan Langkah Pertama Setelah 365 Hari", icon: "fa-book" },
+    { day: 364, title: "Perayaan Pencapaian Anda", icon: "fa-book" },
+    { day: 365, title: "Evaluasi Akhir Perjalanan & Langkah Selanjutnya", icon: "fa-check-circle" },
+];
+            
+            // --- Fungsi untuk Mengaktifkan Interaktivitas di Halaman Materi ---
+            function activateLessonInteractivity() {
+                // Accordion
+                lessonContainer.querySelectorAll('.accordion-item').forEach(item => {
+                    const header = item.querySelector('.accordion-header');
+                    header.addEventListener('click', () => item.classList.toggle('active'));
+                });
+
+                // Animasi Scroll
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.1 });
+                lessonContainer.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+
+                // Kuis
+                lessonContainer.querySelectorAll('.quiz-container').forEach(container => {
+                    const options = container.querySelectorAll('.quiz-option');
+                    const feedbackEl = container.querySelector('.quiz-feedback');
+                    const correctIndex = parseInt(container.dataset.correct, 10);
+                    let answered = false;
+                    options.forEach((option, index) => {
+                        option.addEventListener('click', () => {
+                            if (answered) return;
+                            answered = true;
+                            options.forEach(opt => opt.style.pointerEvents = 'none');
+                            if (index === correctIndex) {
+                                option.classList.add('correct');
+                                feedbackEl.textContent = "Benar! Pemahaman Anda bagus.";
+                                feedbackEl.className = "quiz-feedback correct";
+                            } else {
+                                option.classList.add('incorrect');
+                                options[correctIndex].classList.add('correct');
+                                feedbackEl.textContent = "Kurang tepat. Jawaban yang benar telah ditandai.";
+                                feedbackEl.className = "quiz-feedback incorrect";
+                            }
+                            feedbackEl.style.display = 'block';
+                        });
+                    });
+                });
+            }
+
+            // --- Fungsi untuk Mengatur Tampilan (View) ---
+            function showView(viewToShow) {
+                homeView.style.opacity = '0';
+                lessonView.style.opacity = '0';
+                setTimeout(() => {
+                    if (viewToShow === 'home') {
+                        homeView.classList.remove('view-hidden');
+                        lessonView.classList.add('view-hidden');
+                        homeView.style.opacity = '1';
+                    } else {
+                        homeView.classList.add('view-hidden');
+                        lessonView.classList.remove('view-hidden');
+                        lessonView.classList.add('visible');
+                        lessonView.style.opacity = '1';
+                    }
+                    window.scrollTo(0, 0);
+                }, 300);
+            }
+
+            // --- Fungsi untuk Memuat Konten Materi ---
+            async function loadLesson(day) {
+                try {
+                    // Menggunakan path relatif ke folder 'materi'
+                    const response = await fetch(`./materi/hari-${day}.html`);
+                    if (!response.ok) throw new Error(`Materi untuk Hari ke-${day} belum tersedia atau tidak dapat ditemukan.`);
+                    lessonContainer.innerHTML = await response.text();
+                    showView('lesson');
+                    activateLessonInteractivity();
+                } catch (error) {
+                    console.error('Gagal memuat materi:', error);
+                    lessonContainer.innerHTML = `<div style="padding: 3rem; text-align: center;"><h2><i class="fas fa-exclamation-triangle" style="color: #f85149; margin-right: 10px;"></i>Materi Belum Tersedia</h2><p style="color: var(--color-text-muted); margin-top: 1rem;">${error.message}<br>Pastikan file 'hari-${day}.html' ada di dalam folder 'materi'.</p></div>`;
+                    showView('lesson');
+                }
+            }
+
+            // --- Inisialisasi Halaman ---
+            // Generate Kartu Navigasi
+            for (let i = 1; i <= 365; i++) {
+                let dayData = learningDays.find(d => d.day === i);
+                let title = dayData ? dayData.title : `Materi Pembelajaran Hari ke-${i}`;
+                let icon = dayData ? dayData.icon : 'fa-book-open';
+                const card = document.createElement('div');
+                card.className = 'card';
+                // Menambahkan semua kata kunci ke dataset untuk pencarian yang lebih baik
+                card.dataset.title = `hari ${i} ${title}`.toLowerCase();
+                card.onclick = () => loadLesson(i);
+                card.innerHTML = `<div class="card-header"><i class="fas ${icon} card-icon"></i><h3>Hari ${i}</h3></div><p>${title}</p>`;
+                navigationGrid.appendChild(card);
+            }
+            // Tambahkan Event Listener
+            searchInput.addEventListener('keyup', function() {
+                const filter = searchInput.value.toLowerCase();
+                navigationGrid.querySelectorAll('.card').forEach(card => {
+                    card.style.display = card.dataset.title.includes(filter) ? '' : 'none';
+                });
+            });
+            backButton.addEventListener('click', () => showView('home'));
+            
+            // Tampilkan Halaman Awal
+            showView('home');
+            homeView.style.opacity = '1';
+        });
+    </script>
+</body>
+</html>
