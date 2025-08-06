@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hari 14: Evaluasi Mingguan & Rencana ke Depan</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: #ffffff;
+            padding: 20px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+        h1, h2, h3 {
+            font-weight: 700;
+        }
+        h1 {
+            font-size: 2.1em;
+            text-align: center;
+            color: #6f42c1; /* Ungu */
+            margin-bottom: 10px;
+        }
+        h2 {
+            font-size: 1.7em;
+            color: #0d6efd;
+            margin-top: 40px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #dee2e6;
+        }
+        .tujuan-evaluasi {
+            background-color: #f0ebf9;
+            border-left: 5px solid #6f42c1;
+            padding: 15px 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+        .studi-kasus {
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .studi-kasus img {
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+        }
+        .pertanyaan {
+            margin-bottom: 20px;
+        }
+        .pertanyaan label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+        }
+        textarea {
+            width: 95%;
+            padding: 10px;
+            font-family: inherit;
+            font-size: 1em;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            min-height: 80px;
+        }
+        .jawaban-wrapper {
+            display: none; /* Sembunyikan jawaban secara default */
+            background-color: #e9f5ff;
+            border: 1px solid #bde0fe;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 8px;
+        }
+        .jawaban-wrapper h4 {
+            margin-top: 0;
+            color: #0d6efd;
+        }
+        button {
+            background-color: #0d6efd;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        button:hover {
+            background-color: #0b5ed7;
+        }
+        .tugas-harian {
+            background-color: #fff9e6;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin-top: 40px;
+            border-radius: 8px;
+        }
+        .kesimpulan {
+            background-color: #e2e3e5;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Hari 14: Evaluasi Mingguan Interaktif</h1>
+        <p style="text-align:center; font-size: 1.2em; color: #6c757d; margin-top: -5px;">Uji Pemahaman Materi Hari 8 - 13</p>
+
+        <div class="tujuan-evaluasi">
+            <h4>Tujuan Evaluasi</h4>
+            <p>Merefleksikan dan menguji pemahaman konsep-konsep kunci yang telah dipelajari selama seminggu terakhir.</p>
+            <ul>
+                <li>Membaca Candlestick (Hari 8) & Pola Dasar (Hari 9)</li>
+                <li>Support, Resistance & Tren (Hari 10 & 11)</li>
+                <li>Analisis Fundamental & Manajemen Risiko (Hari 12 & 13)</li>
+            </ul>
+        </div>
+
+        <hr>
+
+        <h2>Studi Kasus: Analisis Chart</h2>
+        <div class="studi-kasus">
+            <p><strong>Skenario:</strong> Anda adalah seorang trader yang sedang menganalisis chart di bawah ini. Jawablah pertanyaan-pertanyaan berikut berdasarkan pengetahuan yang sudah Anda miliki.</p>
+            
+            <!-- PERBAIKAN FINAL DAN AKURAT ADA DI BARIS INI -->
+            <img src="https://raw.githubusercontent.com/ameliap280803-alt/Belajar_trading_365/main/images/evaluasi-hari14.png" alt="Chart Studi Kasus">
+
+            <!-- Pertanyaan 1 -->
+            <div class="pertanyaan">
+                <label for="q1">1. Analisis Candlestick (Hari 8 & 9):</label>
+                <p>Di dalam lingkaran merah (A), terdapat sebuah pola candlestick. Apa nama pola tersebut dan apa sinyal yang diberikannya?</p>
+                <textarea id="q1" placeholder="Tulis jawaban Anda di sini..."></textarea>
+            </div>
+
+            <!-- Pertanyaan 2 -->
+            <div class="pertanyaan">
+                <label for="q2">2. Analisis Support, Resistance & Tren (Hari 10 & 11):</label>
+                <p>Apa nama teknis untuk garis biru horizontal (B) dan garis miring (C)? Jelaskan fungsi masing-masing dalam chart ini.</p>
+                <textarea id="q2" placeholder="Tulis jawaban Anda di sini..."></textarea>
+            </div>
+
+            <!-- Pertanyaan 3 -->
+            <div class="pertanyaan">
+                <label for="q3">3. Analisis Fundamental (Hari 12):</label>
+                <p>Bayangkan pada titik (D), akan ada rilis berita NFP dari AS. Apa tindakan paling bijaksana yang sebaiknya Anda lakukan?</p>
+                <textarea id="q3" placeholder="Tulis jawaban Anda di sini..."></textarea>
+            </div>
+
+            <!-- Pertanyaan 4 -->
+            <div class="pertanyaan">
+                <label for="q4">4. Manajemen Risiko (Hari 13):</label>
+                <p>Jika Anda membuka posisi BUY setelah pola di titik (A) terkonfirmasi, dan modal Anda adalah $1000 dengan aturan risiko 1%, berapa kerugian maksimal dalam dolar ($) yang siap Anda tanggung?</p>
+                <textarea id="q4" placeholder="Tulis jawaban Anda di sini..."></textarea>
+            </div>
+
+            <button onclick="tampilkanJawaban()">Lihat Jawaban & Penjelasan</button>
+
+            <div class="jawaban-wrapper" id="semua-jawaban">
+                <h4>Kunci Jawaban & Penjelasan</h4>
+                <p><strong>Jawaban 1:</strong><br>
+                Pola di lingkaran (A) adalah <strong>Bullish Engulfing</strong>. Pola ini memberikan sinyal kuat adanya potensi <strong>pembalikan ke atas (bullish reversal)</strong>.</p>
+                
+                <p><strong>Jawaban 2:</strong><br>
+                Garis biru (B) adalah level <strong>Resistance</strong> (atap harga). Garis miring (C) adalah <strong>Downtrend Line</strong> (garis tren turun).</p>
+
+                <p><strong>Jawaban 3:</strong><br>
+                Tindakan paling bijaksana adalah <strong>tidak membuka posisi baru</strong> atau waspada. Berita NFP dapat menyebabkan volatilitas ekstrim yang sangat berisiko.</p>
+
+                <p><strong>Jawaban 4:</strong><br>
+                Dengan modal $1000 dan risiko 1%, kerugian maksimal yang bisa ditoleransi adalah <strong>$10</strong> (1% dari $1000).</p>
+            </div>
+        </div>
+
+        <div class="tugas-harian">
+            <h3>Tugas Harian: Refleksi Diri</h3>
+            <ol>
+                <li>Dari kuis di atas, topik mana yang paling Anda kuasai dan mana yang masih sulit?</li>
+                <li>Tuliskan 3 konsep terpenting yang Anda pelajari minggu ini.</li>
+                <li>Buat rencana belajar singkat untuk minggu depan.</li>
+            </ol>
+        </div>
+
+        <div class="kesimpulan">
+            <h3>✨ Kesimpulan Hari 14</h3>
+            <p>Evaluasi adalah bagian penting dari proses belajar. Dengan mengetahui kekuatan dan kelemahan, Anda bisa fokus memperbaiki diri. Pastikan fondasi Anda kokoh sebelum melanjutkan ke materi berikutnya!</p>
+        </div>
+    </div>
+
+    <script>
+        function tampilkanJawaban() {
+            var jawabanDiv = document.getElementById("semua-jawaban");
+            if (jawabanDiv.style.display === "none") {
+                jawabanDiv.style.display = "block";
+            } else {
+                jawabanDiv.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+</html>
