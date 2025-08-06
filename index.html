@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jago Trading dalam 365 Hari</title>
+    <meta name="description" content="Panduan lengkap dari nol hingga mahir untuk menguasai Forex, Saham, dan Kripto dalam 365 hari.">
+    
+    <!-- Google Fonts & Font Awesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* --- 1. Variabel & Reset Global --- */
+        :root {
+            --color-bg: #0d1117;
+            --color-bg-secondary: #161b22;
+            --color-border: #30363d;
+            --color-primary: #58a6ff;
+            --color-accent: #f778ba;
+            --color-success: #2ea043;
+            --color-danger: #f85149;
+            --color-text: #c9d1d9;
+            --color-text-muted: #8b949e;
+            --font-heading: 'Montserrat', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --border-radius: 12px;
+            --transition-speed: 0.4s;
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); background-color: var(--color-bg); color: var(--color-text); line-height: 1.7; overflow-x: hidden; }
+        
+        /* --- 2. Latar Belakang & Layout Utama --- */
+        #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1; }
+        .container { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem; position: relative; z-index: 2; }
+        #homeView, #lessonView { width: 100%; transition: opacity 0.3s ease, transform 0.3s ease; }
+        .view-hidden { display: none !important; }
+
+        /* --- 3. Tampilan Home (Navigasi) --- */
+        .header { text-align: center; padding: 5rem 1rem 3rem; }
+        .header h1 { font-family: var(--font-heading); font-size: clamp(2.8rem, 7vw, 4.5rem); font-weight: 800; color: white; margin-bottom: 1rem; letter-spacing: -2px; background: linear-gradient(90deg, var(--color-primary), var(--color-accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .header .tagline { font-size: 1.2rem; color: var(--color-text-muted); max-width: 600px; margin: 0 auto 2rem auto; }
+        .search-container { margin: 2rem auto; max-width: 600px; }
+        #searchInput { width: 100%; padding: 1rem 1.5rem; font-size: 1rem; border-radius: 50px; border: 1px solid var(--color-border); background-color: var(--color-bg-secondary); color: var(--color-text); transition: all 0.3s ease; }
+        #searchInput:focus { outline: none; box-shadow: 0 0 0 4px rgba(88, 166, 255, 0.3); border-color: var(--color-primary); }
+        .grid-nav { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+        .card { background-color: var(--color-bg-secondary); border-radius: var(--border-radius); padding: 1.5rem; border: 1px solid var(--color-border); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; }
+        .card:hover { transform: translateY(-8px); box-shadow: 0 15px 35px rgba(88, 166, 255, 0.1); }
+        .card-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+        .card-icon { font-size: 1.2rem; color: var(--color-primary); }
+        .card h3 { font-family: var(--font-heading); font-size: 1.1rem; color: white; }
+        .card p { color: var(--color-text-muted); font-size: 0.9rem; }
+
+        /* --- 4. Tampilan Pelajaran (Konten Dinamis) --- */
+        #lessonView { opacity: 0; transform: translateY(20px); }
+        #lessonView.visible { opacity: 1; transform: translateY(0); }
+        #lessonContainer { background: var(--color-bg-secondary); border-radius: var(--border-radius); border: 1px solid var(--color-border); margin-top: 2rem; overflow: hidden; }
+        #backButton { display: inline-flex; align-items: center; gap: 0.5rem; background: none; border: none; color: var(--color-primary); font-size: 1rem; cursor: pointer; padding: 1rem 0; font-weight: 600; }
+        
+        /* --- 5. Styling Umum untuk Konten Pelajaran --- */
+        .lesson-header { padding: 3rem 1.5rem; text-align: center; background: linear-gradient(135deg, rgba(88,166,255,0.1), rgba(247,120,186,0.1)); border-bottom: 1px solid var(--color-border); }
+        .lesson-header h1 { font-size: clamp(2rem, 8vw, 3rem); line-height: 1.2; color: white; margin-bottom: 0.5rem; }
+        .lesson-header .day-number { background: var(--color-primary); color: var(--color-bg); padding: 0.5rem 1.25rem; border-radius: 50px; font-weight: 700; display: inline-block; margin-bottom: 1rem; }
+        .lesson-content { padding: 2rem 1.5rem; }
+        .lesson-content .section { margin-bottom: 2.5rem; }
+        .lesson-content h2 { font-size: 1.6rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem; color: white; border-bottom: 1px solid var(--color-border); padding-bottom: 0.75rem; }
+        .lesson-content h2 .icon { color: var(--color-primary); }
+        .lesson-content .highlight-box { background: linear-gradient(90deg, var(--color-primary), var(--color-accent)); color: white; padding: 2rem; border-radius: var(--border-radius); margin: 2.5rem 0; text-align: center; }
+        .lesson-content .highlight-box h3 { color: white; }
+        .scroll-reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+        .scroll-reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* --- 6. Styling untuk Komponen Interaktif Pelajaran --- */
+        .lesson-content .interactive-card { background: rgba(255, 255, 255, 0.03); border: 1px solid var(--color-border); border-radius: var(--border-radius); padding: 1.5rem; margin-bottom: 1rem; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .lesson-content .interactive-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(88, 166, 255, 0.1); border-color: var(--color-primary); }
+        .interactive-card strong { color: var(--color-primary); font-size: 1.1rem; display: flex; align-items: center; gap: 0.75rem; }
+        .interactive-card p { color: var(--color-text-muted); margin-top: 0.5rem; }
+        .accordion-item { background-color: rgba(255, 255, 255, 0.03); border: 1px solid var(--color-border); border-radius: var(--border-radius); margin-bottom: 1rem; overflow: hidden; }
+        .accordion-header { padding: 1.25rem 1.5rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: background-color 0.3s ease; }
+        .accordion-header:hover { background-color: rgba(88, 166, 255, 0.1); }
+        .accordion-header h4 { margin: 0; color: white; display: flex; align-items: center; gap: 0.75rem; }
+        .accordion-header .icon-toggle { transition: transform 0.3s ease; color: var(--color-primary); }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out, padding 0.4s ease-out; padding: 0 1.5rem; }
+        .accordion-content p { padding-bottom: 1.5rem; color: var(--color-text-muted); }
+        .accordion-item.active .accordion-content { max-height: 300px; }
+        .accordion-item.active .icon-toggle { transform: rotate(180deg); }
+        .quiz-container { margin-bottom: 1.5rem; border: 1px solid var(--color-border); padding: 1.5rem; border-radius: var(--border-radius); }
+        .quiz-question { font-weight: 600; margin-bottom: 1rem; color: white; }
+        .quiz-option { background: rgba(255, 255, 255, 0.05); border: 1px solid var(--color-border); border-radius: 8px; padding: 0.75rem 1.25rem; margin-bottom: 0.75rem; cursor: pointer; transition: all 0.3s ease; }
+        .quiz-option:hover { background: rgba(88, 166, 255, 0.1); border-color: var(--color-primary); }
+        .quiz-option.correct { background-color: rgba(46, 160, 67, 0.2); border-color: var(--color-success); color: #56d364; font-weight: bold; }
+        .quiz-option.incorrect { background-color: rgba(248, 81, 73, 0.2); border-color: var(--color-danger); color: #ff7b72; }
+        .quiz-feedback { margin-top: 1rem; padding: 1rem; border-radius: 8px; display: none; font-weight: 600; }
+        .quiz-feedback.correct { background-color: rgba(46, 160, 67, 0.2); color: #56d364; }
+        .quiz-feedback.incorrect { background-color: rgba(248, 81, 73, 0.2); color: #ff7b72; }
+
+        /* --- 7. Footer --- */
+        .footer { text-align: center; padding: 2rem; margin-top: 4rem; color: var(--color-text-muted); font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    <main class="container">
+        <div id="homeView">
+            <header class="header">
+                <h1>Jago Trading dalam 365 Hari</h1>
+                <p class="tagline">Panduan Lengkap dari Nol hingga Mahir: Kuasai Forex, Saham, dan Kripto dalam Setahun.</p>
+            </header>
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Cari materi (misal: candlestick, smc, hari 10)...">
+            </div>
+            <div class="grid-nav" id="navigationGrid"></div>
+        </div>
+        <div id="lessonView" class="view-hidden">
+            <button id="backButton"><i class="fas fa-arrow-left"></i> Kembali ke Daftar Isi</button>
+            <div id="lessonContainer"></div>
+        </div>
+    </main>
+    <footer class="footer">
+        <p>&copy; 2025 | Proyek Belajar 365 Hari</p>
+    </footer>
+
+    <!-- Library untuk Animasi Partikel -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
+    <script>
+        // --- Konfigurasi Animasi Partikel ---
+        particlesJS("particles-js", { particles: { number: { value: 50 }, color: { value: "#58a6ff" }, shape: { type: "circle" }, opacity: { value: 0.3, random: true }, size: { value: 3, random: true }, line_linked: { enable: true, distance: 150, color: "#8b949e", opacity: 0.2 }, move: { enable: true, speed: 1, direction: "none", out_mode: "out" } }, interactivity: { detect_on: "canvas", events: { onhover: { enable: true, mode: "grab" }, onclick: { enable: false } }, modes: { grab: { distance: 140, line_linked: { opacity: 0.5 } } } } });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Inisialisasi Elemen DOM ---
+            const homeView = document.getElementById('homeView');
+            const lessonView = document.getElementById('lessonView');
+            const navigationGrid = document.getElementById('navigationGrid');
+            const searchInput = document.getElementById('searchInput');
+            const lessonContainer = document.getElementById('lessonContainer');
+            const backButton = document.getElementById('backButton');
+            
+            // --- Data Materi (Bisa diperbanyak) ---
+            // Versi yang sudah diperbarui dengan Hari ke-10
+            const learningDays = [ 
+                { day: 1, title: 'Mengapa Trading? Tujuan, Risiko, dan Potensi', icon: 'fa-flag-checkered' }, 
+                { day: 2, title: 'Mengenal Pasar Forex: Pasangan Mata Uang', icon: 'fa-dollar-sign' },
+                { day: 3, title: 'Mengenal Pasar Saham: Indeks dan Emiten', icon: 'fa-building-columns' },
+                { day: 4, title: 'Mengenal Pasar Kripto: Blockchain dan Aset Digital', icon: 'fa-bitcoin-sign' },
+                { day: 8, title: 'Pengenalan Chart Candlestick', icon: 'fa-chart-column' }, 
+                { day: 10, title: 'Mengenal Support & Resistance', icon: 'fa-layer-group' },
+                { day: 36, title: 'Pengenalan Smart Money Concepts (SMC)', icon: 'fa-brain' }, 
+                { day: 365, title: 'Evaluasi Akhir & Langkah Selanjutnya', icon: 'fa-graduation-cap' } 
+            ];
+            
+            // --- Fungsi untuk Mengaktifkan Interaktivitas di Halaman Materi ---
+            function activateLessonInteractivity() {
+                // Accordion
+                lessonContainer.querySelectorAll('.accordion-item').forEach(item => {
+                    const header = item.querySelector('.accordion-header');
+                    header.addEventListener('click', () => item.classList.toggle('active'));
+                });
+
+                // Animasi Scroll
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.1 });
+                lessonContainer.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+
+                // Kuis
+                lessonContainer.querySelectorAll('.quiz-container').forEach(container => {
+                    const options = container.querySelectorAll('.quiz-option');
+                    const feedbackEl = container.querySelector('.quiz-feedback');
+                    const correctIndex = parseInt(container.dataset.correct, 10);
+                    let answered = false;
+                    options.forEach((option, index) => {
+                        option.addEventListener('click', () => {
+                            if (answered) return;
+                            answered = true;
+                            options.forEach(opt => opt.style.pointerEvents = 'none');
+                            if (index === correctIndex) {
+                                option.classList.add('correct');
+                                feedbackEl.textContent = "Benar! Pemahaman Anda bagus.";
+                                feedbackEl.className = "quiz-feedback correct";
+                            } else {
+                                option.classList.add('incorrect');
+                                options[correctIndex].classList.add('correct');
+                                feedbackEl.textContent = "Kurang tepat. Jawaban yang benar telah ditandai.";
+                                feedbackEl.className = "quiz-feedback incorrect";
+                            }
+                            feedbackEl.style.display = 'block';
+                        });
+                    });
+                });
+            }
+
+            // --- Fungsi untuk Mengatur Tampilan (View) ---
+            function showView(viewToShow) {
+                homeView.style.opacity = '0';
+                lessonView.style.opacity = '0';
+                setTimeout(() => {
+                    if (viewToShow === 'home') {
+                        homeView.classList.remove('view-hidden');
+                        lessonView.classList.add('view-hidden');
+                        homeView.style.opacity = '1';
+                    } else {
+                        homeView.classList.add('view-hidden');
+                        lessonView.classList.remove('view-hidden');
+                        lessonView.classList.add('visible');
+                        lessonView.style.opacity = '1';
+                    }
+                    window.scrollTo(0, 0);
+                }, 300);
+            }
+
+            // --- Fungsi untuk Memuat Konten Materi ---
+            async function loadLesson(day) {
+                try {
+                    // Menggunakan path relatif ke folder 'materi'
+                    const response = await fetch(`./materi/hari-${day}.html`);
+                    if (!response.ok) throw new Error(`Materi untuk Hari ke-${day} belum tersedia atau tidak dapat ditemukan.`);
+                    lessonContainer.innerHTML = await response.text();
+                    showView('lesson');
+                    activateLessonInteractivity();
+                } catch (error) {
+                    console.error('Gagal memuat materi:', error);
+                    lessonContainer.innerHTML = `<div style="padding: 3rem; text-align: center;"><h2><i class="fas fa-exclamation-triangle" style="color: #f85149; margin-right: 10px;"></i>Materi Belum Tersedia</h2><p style="color: var(--color-text-muted); margin-top: 1rem;">${error.message}<br>Pastikan file 'hari-${day}.html' ada di dalam folder 'materi'.</p></div>`;
+                    showView('lesson');
+                }
+            }
+
+            // --- Inisialisasi Halaman ---
+            // Generate Kartu Navigasi
+            for (let i = 1; i <= 365; i++) {
+                let dayData = learningDays.find(d => d.day === i);
+                let title = dayData ? dayData.title : `Materi Pembelajaran Hari ke-${i}`;
+                let icon = dayData ? dayData.icon : 'fa-book-open';
+                const card = document.createElement('div');
+                card.className = 'card';
+                // Menambahkan semua kata kunci ke dataset untuk pencarian yang lebih baik
+                card.dataset.title = `hari ${i} ${title}`.toLowerCase();
+                card.onclick = () => loadLesson(i);
+                card.innerHTML = `<div class="card-header"><i class="fas ${icon} card-icon"></i><h3>Hari ${i}</h3></div><p>${title}</p>`;
+                navigationGrid.appendChild(card);
+            }
+            // Tambahkan Event Listener
+            searchInput.addEventListener('keyup', function() {
+                const filter = searchInput.value.toLowerCase();
+                navigationGrid.querySelectorAll('.card').forEach(card => {
+                    card.style.display = card.dataset.title.includes(filter) ? '' : 'none';
+                });
+            });
+            backButton.addEventListener('click', () => showView('home'));
+            
+            // Tampilkan Halaman Awal
+            showView('home');
+            homeView.style.opacity = '1';
+        });
+    </script>
+</body>
+</html>
